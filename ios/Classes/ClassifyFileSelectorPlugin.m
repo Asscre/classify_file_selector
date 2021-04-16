@@ -1,11 +1,11 @@
-#import "FlutterfileselectorPlugin.h"
+#import "ClassifyFileSelectorPlugin.h"
 
-@implementation FlutterfileselectorPlugin
+@implementation ClassifyFileSelectorPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"flutterfileselector"
+      methodChannelWithName:@"classifyfileselector"
             binaryMessenger:[registrar messenger]];
-  FlutterfileselectorPlugin* instance = [[FlutterfileselectorPlugin alloc] init];
+  ClassifyFileSelectorPlugin* instance = [[ClassifyFileSelectorPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
 }
 
