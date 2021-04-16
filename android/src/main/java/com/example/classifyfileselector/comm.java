@@ -1,4 +1,4 @@
-package com.example.flutterfileselector;
+package com.example.classifyfileselector;
 
 /**
  * 接口变量

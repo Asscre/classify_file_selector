@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'dart:typed_data';
+
 /// file model
 class FileModelUtil {
   File file;
@@ -10,7 +12,7 @@ class FileModelUtil {
   String fileSizeStr;
   String fileDateStr;
   String fileImage;
-  String videoImg;
+  Uint8List videoImg;
   FileModelUtil({
     this.fileDate,
     this.fileName,

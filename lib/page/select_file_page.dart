@@ -1,3 +1,4 @@
+import 'package:classify_file_selector/provider/classify_file_page_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
@@ -24,6 +25,8 @@ class SelectFilePage extends StatefulWidget {
 }
 
 class _SelectFilePageState extends State<SelectFilePage> {
+  ClassifyFilePageProvider _classifyFilePageProvider = ClassifyFilePageProvider();
+
   @override
   Widget build(BuildContext context) {
     double picW = MediaQuery.of(context).size.width;
@@ -164,7 +167,7 @@ class _SelectFilePageState extends State<SelectFilePage> {
       itemBuilder: (BuildContext ctx, int index) {
         return index == 0
             ? AllFilePage(fileList: fileList)
-            : ClassifyFilePage(fileList: fileList);
+            : ClassifyFilePage(p: _classifyFilePageProvider);
       },
     );
   }

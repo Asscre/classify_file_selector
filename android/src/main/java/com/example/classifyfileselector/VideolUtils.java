@@ -1,4 +1,4 @@
-package com.example.flutterfileselector;
+package com.example.classifyfileselector;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.util.Log;

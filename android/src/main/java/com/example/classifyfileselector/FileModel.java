@@ -1,4 +1,4 @@
-package com.example.flutterfileselector;
+package com.example.classifyfileselector;
 
 /**
  * 文件实体类

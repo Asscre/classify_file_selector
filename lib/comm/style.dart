@@ -22,7 +22,7 @@ class Style {
   static const String IMG_VIDEO = IMG_PATH + "video.png";
 
   /// 压缩图标
-  static const String IMG_YS = IMG_PATH + "ys.png";
+  static const String IMG_YS = IMG_PATH + "f-zip.png";
 
   /// word图标
   static const String IMG_WORD = IMG_PATH + "word.png";

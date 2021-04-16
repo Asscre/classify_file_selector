@@ -48,9 +48,9 @@ public class ClassifyFileSelectorPlugin implements FlutterPlugin, MethodCallHand
     // in the same class.
     public static void registerWith(Registrar registrar) {
         // 先保存Registrar对象
-        FlutterfileselectorPlugin.registrarFlutter = registrar;
+        ClassifyFileSelectorPlugin.registrarFlutter = registrar;
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "classify_file_selector");
-        channel.setMethodCallHandler(new FlutterfileselectorPlugin());
+        channel.setMethodCallHandler(new ClassifyFileSelectorPlugin());
     }
 
     /**

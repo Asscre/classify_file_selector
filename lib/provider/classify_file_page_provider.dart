@@ -6,6 +6,7 @@ import 'package:classify_file_selector/comm/comm.dart';
 import 'package:classify_file_selector/comm/comm_util.dart';
 import 'package:classify_file_selector/model/classify_file_item_model.dart';
 import 'package:classify_file_selector/model/file_util_model.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -36,7 +37,7 @@ class ClassifyFilePageProvider with ChangeNotifier {
     }
   }
 
-  void switchClassily(int i, BuildContext ctx) {
+  void switchClassify(int i, BuildContext ctx) {
     classifyBarList.forEach((e) {
       e.isSelect = false;
     });
@@ -52,13 +53,13 @@ class ClassifyFilePageProvider with ChangeNotifier {
         Map<String, Object> map = {Comm.TYPE: fileTypeEnd};
         // 将后缀发给原生，原生返回文件集合
         final String dataStr =
-        await Comm.CHANNEL.invokeMethod(Comm.GET_FILE, map);
+            await Comm.CHANNEL.invokeMethod(Comm.GET_FILE, map);
         List<dynamic> listFileStr = jsonDecode(dataStr);
 
         List<FileModelUtil> fileList = [];
         listFileStr.forEach((f) async {
           File _d = File(f["filePath"]);
-          if (i == 1) {
+          if (i == 0) {
             fileList.add(FileModelUtil(
               fileDate: f["fileDate"],
               fileName: f["fileName"],
@@ -67,9 +68,21 @@ class ClassifyFilePageProvider with ChangeNotifier {
               file: _d,
               fileDateStr: _d.statSync().changed.toString().substring(0, 19),
               fileSizeStr:
-              (_d.statSync().size / 1024 / 1024).toStringAsFixed(2),
+                  (_d.statSync().size / 1024 / 1024).toStringAsFixed(2),
               fileImage: CommUtil.fileLogo(f["filePath"])["png"],
-              videoImg: await VideoThumbnail.thumbnailFile(
+            ));
+          } else if (i == 1) {
+            fileList.add(FileModelUtil(
+              fileDate: f["fileDate"],
+              fileName: f["fileName"],
+              filePath: f["filePath"],
+              fileSize: f["fileSize"],
+              file: _d,
+              fileDateStr: _d.statSync().changed.toString().substring(0, 19),
+              fileSizeStr:
+                  (_d.statSync().size / 1024 / 1024).toStringAsFixed(2),
+              fileImage: CommUtil.fileLogo(f["filePath"])["png"],
+              videoImg: await VideoThumbnail.thumbnailData(
                 video: f["filePath"],
                 imageFormat: ImageFormat.PNG,
                 maxWidth: 128,
@@ -85,7 +98,7 @@ class ClassifyFilePageProvider with ChangeNotifier {
               file: _d,
               fileDateStr: _d.statSync().changed.toString().substring(0, 19),
               fileSizeStr:
-              (_d.statSync().size / 1024 / 1024).toStringAsFixed(2),
+                  (_d.statSync().size / 1024 / 1024).toStringAsFixed(2),
               fileImage: CommUtil.fileLogo(f["filePath"])["png"],
             ));
           }

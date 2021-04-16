@@ -1,4 +1,4 @@
-package com.example.flutterfileselector;
+package com.example.classifyfileselector;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
