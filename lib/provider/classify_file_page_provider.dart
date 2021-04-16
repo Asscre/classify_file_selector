@@ -6,12 +6,16 @@ import 'package:classify_file_selector/comm/comm.dart';
 import 'package:classify_file_selector/comm/comm_util.dart';
 import 'package:classify_file_selector/model/classify_file_item_model.dart';
 import 'package:classify_file_selector/model/file_util_model.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class ClassifyFilePageProvider with ChangeNotifier {
   PageController pageController = PageController(initialPage: 0);
+
+  ///  选择的文件
+  List<FileModelUtil> fileSelect = [];
+
+  bool loading = false;
 
   List<ClassifyFileItemModel> classifyBarList = [
     ClassifyFileItemModel(CommUtil.imgExpandName, true, '图片'),
@@ -24,7 +28,6 @@ class ClassifyFilePageProvider with ChangeNotifier {
   int selectIndex = 0;
 
   /// 文件类型
-
   List<FileModelUtil> imgFileList = [];
   List<FileModelUtil> videoFileList = [];
   List<FileModelUtil> musicFileList = [];
@@ -129,5 +132,24 @@ class ClassifyFilePageProvider with ChangeNotifier {
     } catch (e) {
       print("FlutterFileSelect Error:" + e.toString());
     }
+  }
+
+  /// 选择文件
+  void selectFile(int index, int type) {
+    // if (!fileSelect.contains(fileList[index])) {
+    //   /// todo:  等于最大可选 拦截点击 并提示
+    //   if (maxCount == fileSelect.length) {
+    //     _snackBarMsg('最多可选$maxCount个文件');
+    //     return;
+    //   }
+    //   fileSelect.add(fileList[index]);
+    // } else {
+    //   fileSelect.removeAt(fileSelect.indexOf(fileList[index]));
+    // }
+    // notifyListeners();
+  }
+
+  bool check(int index, int type) {
+    // return fileSelect.contains(fileList[index]);
   }
 }

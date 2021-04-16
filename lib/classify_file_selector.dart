@@ -1,11 +1,13 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:classify_file_selector/provider/classify_file_page_provider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:classify_file_selector/page/select_file_page.dart';
 import 'package:classify_file_selector/comm/comm_util.dart';
+import 'package:provider/provider.dart';
 
 import 'model/file_util_model.dart';
 
@@ -69,9 +71,13 @@ class _ClassifyFileSelectorState extends State<ClassifyFileSelector> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SelectFilePage(
-          maxCount: widget.maxCount,
-          fileTypeEnd: widget.fileTypeEnd,
+        builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => ClassifyFilePageProvider(),
+            ),
+          ],
+          child: SelectFilePage(),
         ),
       ),
     ).then((value) {

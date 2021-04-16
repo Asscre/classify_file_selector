@@ -1,8 +1,10 @@
+import 'package:classify_file_selector/page/comm/image_widget.dart';
+import 'package:classify_file_selector/page/comm/video_widget.dart';
+import 'package:classify_file_selector/provider/classify_file_page_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:classify_file_selector/comm/comm.dart';
 import 'package:classify_file_selector/model/file_util_model.dart';
-import 'package:classify_file_selector/provider/select_file_page_provider.dart';
 import 'package:provider/provider.dart';
 
 class AllFilePage extends StatefulWidget {
@@ -41,7 +43,7 @@ class _AllFilePageState extends State<AllFilePage>
 
   /// 加载视图loading
   Widget _loadingWidget(BuildContext ctx) {
-    bool loading = ctx.watch<SelectFilePageProvider>().loading;
+    bool loading = ctx.watch<ClassifyFilePageProvider>().loading;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -69,16 +71,12 @@ class FileListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
+    print(val.fileImage);
     return CheckboxListTile(
-      value: ctx.read<SelectFilePageProvider>().check(index),
+      value: ctx.read<ClassifyFilePageProvider>().check(index, 1),
       onChanged: (bool value) =>
-          ctx.read<SelectFilePageProvider>().selectFile(index),
-      secondary: Image.asset(
-        val.fileImage,
-        package: Comm.PACKNAME,
-        width: ScreenUtil().setWidth(40),
-        height: ScreenUtil().setHeight(40),
-      ),
+          ctx.read<ClassifyFilePageProvider>().selectFile(index, 1),
+      secondary: _show(),
       title: Text(
         "${val.fileName}",
         overflow: TextOverflow.ellipsis,
@@ -103,7 +101,28 @@ class FileListItemWidget extends StatelessWidget {
       // 指定选中时勾选框的颜色
       checkColor: Colors.white,
       isThreeLine: false,
-      selected: ctx.read<SelectFilePageProvider>().check(index),
+      selected: ctx.read<ClassifyFilePageProvider>().check(index, 1),
     );
+  }
+
+  Widget _show() {
+    final w = ScreenUtil().setWidth(40);
+    final h = ScreenUtil().setWidth(40);
+    print(val.videoImg);
+    switch (val.fileImage) {
+      case 'images/video.png':
+        return VideoWidget(val, width: w, height: h);
+        break;
+      case 'images/image.png':
+        return ImageWidget(val, width: w, height: h);
+        break;
+      default:
+        return Image.asset(
+          val.fileImage,
+          package: Comm.PACKNAME,
+          width: w,
+          height: h,
+        );
+    }
   }
 }

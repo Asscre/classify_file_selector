@@ -1,6 +1,4 @@
-import 'dart:io';
-
-import 'package:extended_image/extended_image.dart';
+import 'package:classify_file_selector/page/comm/video_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:classify_file_selector/model/classify_file_item_model.dart';
@@ -9,11 +7,9 @@ import 'package:classify_file_selector/page/all_file_page.dart';
 import 'package:classify_file_selector/provider/classify_file_page_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'comm/image_widget.dart';
+
 class ClassifyFilePage extends StatefulWidget {
-  final ClassifyFilePageProvider p;
-
-  const ClassifyFilePage({Key key, this.p}) : super(key: key);
-
   @override
   _ClassifyFilePageState createState() => _ClassifyFilePageState();
 }
@@ -26,24 +22,19 @@ class _ClassifyFilePageState extends State<ClassifyFilePage>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: widget.p,
-      builder: (BuildContext ctx, Widget child) {
-        return Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.white,
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _classifyBar(ctx),
-              _content(ctx),
-            ],
-          ),
-        );
-      },
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      color: Colors.white,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _classifyBar(context),
+          _content(context),
+        ],
+      ),
     );
   }
 
@@ -151,29 +142,7 @@ class _ClassifyFilePageState extends State<ClassifyFilePage>
   Widget _imageWidget(FileModelUtil val) {
     return Stack(
       children: [
-        Container(
-          width: ScreenUtil().setWidth(170),
-          height: ScreenUtil().setWidth(170),
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(244, 246, 249, 1),
-            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(10)),
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromRGBO(208, 215, 219, 1),
-                offset: Offset(1, 1),
-              ),
-            ],
-          ),
-          child: ExtendedImage(
-            image: Image.file(
-              val.file,
-            ).image,
-            fit: BoxFit.cover,
-            width: ScreenUtil().setWidth(170),
-            height: ScreenUtil().setWidth(170),
-            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(10)),
-          ),
-        ),
+        ImageWidget(val),
       ],
     );
   }
@@ -181,24 +150,11 @@ class _ClassifyFilePageState extends State<ClassifyFilePage>
   Widget _videoWidget(FileModelUtil val) {
     return Stack(
       children: [
-        Container(
-          height: ScreenUtil().setWidth(180),
-          width: ScreenUtil().setWidth(180),
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(244, 246, 249, 1),
-            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(10)),
-          ),
-          // child: Text(e.fileName),
-          child: Image.memory(
-            val.videoImg,
-            fit: BoxFit.fill,
-          ),
-        ),
+        VideoWidget(val),
       ],
     );
   }
 
-  /// music office and other file widget
   Widget _otherWidget(List<FileModelUtil> fileList) {
     return AllFilePage(fileList: fileList);
   }
